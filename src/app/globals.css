@@ -1,26 +1,71 @@
 @import "tailwindcss";
 
+/*
+ * DESIGN TOKENS — Girrafa Produzida
+ * ----------------------------------
+ * Paleta e tipografia PLACEHOLDER, documentadas em detalhe em
+ * docs/DESIGN_SYSTEM.md. Foram escolhidas com base em pesquisa de
+ * referência (produtoras/selos musicais com loja própria): base
+ * preto/branco de alto contraste + uma cor de acento aplicada com
+ * moderação, título em fonte condensada/bold e textos de apoio em
+ * fonte monoespaçada.
+ *
+ * Quando a identidade visual definitiva da Girrafa Produzida existir
+ * (logo, paleta de marca, fontes licenciadas), troque SOMENTE os
+ * valores abaixo — o resto do app consome estas variáveis via Tailwind
+ * (ex: bg-ink, text-paper, font-display) e não deve precisar mudar.
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Base neutra */
+  --color-ink: #121212; /* preto quase puro, usado em nav, footer, texto principal */
+  --color-paper: #f4f3ef; /* fundo claro geral */
+  --color-paper-muted: #e6e4dd; /* fundo de blocos alternados */
+  --color-line: #d8d6cd; /* bordas e divisores sutis */
+  --color-muted: #6b6b63; /* texto secundário */
+
+  /* Acentos (usar com moderação, nunca como cor de fundo dominante) */
+  --color-accent-gold: #e8b923;
+  --color-accent-red: #d3402f;
+  --color-accent-blue: #2f5fa8;
+
+  /* Tipografia — fontes carregadas via @fontsource em layout.tsx */
+  --font-display: "Anton", "Arial Narrow", sans-serif;
+  --font-sans: "Inter", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", "Courier New", monospace;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-ink: var(--color-ink);
+  --color-paper: var(--color-paper);
+  --color-paper-muted: var(--color-paper-muted);
+  --color-line: var(--color-line);
+  --color-muted: var(--color-muted);
+  --color-accent-gold: var(--color-accent-gold);
+  --color-accent-red: var(--color-accent-red);
+  --color-accent-blue: var(--color-accent-blue);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-display: var(--font-display);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+/* Utilitário para títulos no estilo "pôster" usado nos banners/hero */
+.text-display {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  line-height: 0.95;
+}
+
+/* Utilitário para labels/preço/metadados no estilo "catálogo" */
+.text-meta {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }

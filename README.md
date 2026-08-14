@@ -1,36 +1,101 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Girrafa Produzida — Site + Loja
 
-## Getting Started
+Protótipo funcional do site institucional e loja virtual da **Girrafa
+Produzida**, produtora musical.
 
-First, run the development server:
+> Este é um protótipo com dados de exemplo (placeholder), pensado para
+> ser a base que um time de desenvolvimento evolui até produção. Antes
+> de mexer no código, leia esta página inteira e depois os documentos
+> em `docs/`.
+
+## Stack
+
+- [Next.js 16](https://nextjs.org) (App Router) — **atenção:** esta versão
+  do Next.js pode ter mudanças que fogem do que modelos de IA "sabem de
+  cor". Se for usar um assistente de IA neste projeto, ele já vai
+  encontrar as instruções corretas em `AGENTS.md` / `CLAUDE.md` na raiz.
+- TypeScript
+- Tailwind CSS v4 (configurado via `@theme` em `src/app/globals.css`, não
+  via `tailwind.config.js` — é assim mesmo na v4)
+- Fontes self-hosted via [`@fontsource`](https://fontsource.org) (não
+  usamos `next/font/google` de propósito — ver nota abaixo)
+
+## Como rodar
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev       # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Outros comandos:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build      # build de produção
+npm run start       # roda o build de produção localmente
+npm run lint        # ESLint
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Estrutura de pastas
 
-## Learn More
+```
+src/
+  app/                  → rotas (App Router do Next.js). Cada pasta = 1 segmento de URL.
+    page.tsx            → home ("/")
+    artistas/
+      page.tsx           → listagem de artistas ("/artistas")
+      [slug]/page.tsx    → página de 1 artista ("/artistas/nome-do-artista")
+    loja/
+      page.tsx           → listagem da loja ("/loja"), com filtro por categoria via ?categoria=
+      produto/[slug]/page.tsx → página de 1 produto
+    sobre/page.tsx       → página institucional
+    contato/page.tsx     → formulário de contato (visual, sem envio real ainda)
+    layout.tsx           → layout raiz: fontes, <html>/<body>, Header/Footer fixos
+    globals.css          → design tokens (cores, tipografia) + estilos globais
 
-To learn more about Next.js, take a look at the following resources:
+  components/
+    layout/              → Header, Footer, Newsletter (usados em todas as páginas)
+    home/                → componentes exclusivos da home (Hero, CategoryGrid)
+    ui/                  → componentes reutilizáveis em qualquer página
+                            (ArtistCard, ProductCard, Button, SectionHeading, PlaceholderImage)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+  content/                → "banco de dados" provisório, em código
+    artists.ts            → lista de artistas + funções de busca (getArtistBySlug, etc.)
+    products.ts            → lista de produtos + funções de busca
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+  lib/
+    types.ts               → tipos TypeScript centrais (Artist, Product) — a fonte da verdade
+                              da forma dos dados
+    format.ts               → utilitários (ex: formatação de preço em R$)
 
-## Deploy on Vercel
+docs/                       → documentação do projeto (leia antes de codar)
+  ARCHITECTURE.md            → decisões técnicas e o que falta para produção
+  DESIGN_SYSTEM.md           → cores, tipografia, regras visuais
+  CONTENT_GUIDE.md            → como adicionar/editar artistas e produtos
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+public/
+  images/                    → onde entram fotos reais (hoje vazio — ver docs/CONTENT_GUIDE.md)
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Por que os dados estão "hardcoded" em `src/content/`?
+
+Para o protótipo funcionar de ponta a ponta (navegação, filtros, página
+de produto) sem depender de nenhum serviço externo ainda. `src/lib/types.ts`
+define o formato exato dos dados (`Artist`, `Product`) — quando o
+catálogo real for definido (CMS, Shopify, banco próprio etc.), a migração
+é trocar `src/content/*.ts` por chamadas à API real, mantendo os
+mesmos tipos. O resto do app (componentes, páginas) não deveria precisar
+mudar.
+
+## Por que não usamos `next/font/google`?
+
+Porque este ambiente de desenvolvimento não tem acesso a
+`fonts.googleapis.com`, o que quebra o build. Trocamos por pacotes
+[`@fontsource`](https://fontsource.org) (mesmas fontes, arquivos
+distribuídos via npm, sem dependência de rede em build). Isso também é
+uma prática comum em produção por trazer mais controle e privacidade
+(evita chamada a domínio do Google no runtime do usuário final). Ver
+`src/app/layout.tsx`.
+
+## Próximos passos
+
+Ver `docs/ARCHITECTURE.md`, seção "O que falta para produção".

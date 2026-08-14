@@ -3,6 +3,10 @@
 Protótipo funcional do site institucional e loja virtual da **Girrafa
 Produzida**, produtora musical.
 
+🔗 **Site publicado:** https://giraffaproduzida.github.io/giraffasite/
+(atualiza automaticamente a cada push na branch `main` — ver
+`docs/DEPLOY.md`)
+
 > Este é um protótipo com dados de exemplo (placeholder), pensado para
 > ser a base que um time de desenvolvimento evolui até produção. Antes
 > de mexer no código, leia esta página inteira e depois os documentos
@@ -71,9 +75,13 @@ docs/                       → documentação do projeto (leia antes de codar)
   ARCHITECTURE.md            → decisões técnicas e o que falta para produção
   DESIGN_SYSTEM.md           → cores, tipografia, regras visuais
   CONTENT_GUIDE.md            → como adicionar/editar artistas e produtos
+  DEPLOY.md                   → como o site é publicado no GitHub Pages
 
 public/
   images/                    → onde entram fotos reais (hoje vazio — ver docs/CONTENT_GUIDE.md)
+
+.github/
+  workflows/deploy.yml        → publica o site automaticamente a cada push na main
 ```
 
 ## Por que os dados estão "hardcoded" em `src/content/`?
@@ -95,6 +103,17 @@ distribuídos via npm, sem dependência de rede em build). Isso também é
 uma prática comum em produção por trazer mais controle e privacidade
 (evita chamada a domínio do Google no runtime do usuário final). Ver
 `src/app/layout.tsx`.
+
+## Hospedagem: GitHub Pages (site estático)
+
+O projeto está configurado para gerar um **export estático**
+(`output: "export"` em `next.config.ts`) e publicar em
+[GitHub Pages](https://pages.github.com/), no repositório
+`GiraffaProduzida/giraffasite`. Isso significa que não existe servidor
+Node em produção — só arquivos HTML/CSS/JS. Ver `docs/DEPLOY.md` para
+o fluxo completo e o que isso limita (ex: formulário de contato e
+newsletter precisam de um serviço externo para processar o envio, já
+que não há backend próprio).
 
 ## Próximos passos
 

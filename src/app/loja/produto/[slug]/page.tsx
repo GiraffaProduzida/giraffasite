@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import PlaceholderImage from "@/components/ui/PlaceholderImage";
 import { Button } from "@/components/ui/Button";
+import AddToCartButton from "@/components/loja/AddToCartButton";
 import { products, getProductBySlug } from "@/content/products";
 import { getArtistBySlug } from "@/content/artists";
 import { formatPriceBRL } from "@/lib/format";
@@ -54,7 +55,7 @@ export default async function ProdutoPage(props: PageProps<"/loja/produto/[slug]
 
         <div className="mt-6">
           {product.inStock ? (
-            <Button type="button">Adicionar ao carrinho</Button>
+            <AddToCartButton productSlug={product.slug} />
           ) : (
             <Button type="button" variant="secondary" disabled className="cursor-not-allowed opacity-50">
               Esgotado
@@ -63,8 +64,9 @@ export default async function ProdutoPage(props: PageProps<"/loja/produto/[slug]
         </div>
 
         <p className="mt-3 text-xs text-muted">
-          * Botão de compra ainda não conectado a um checkout real — ver
-          docs/ARCHITECTURE.md, seção &quot;O que falta para produção&quot;.
+          * O carrinho já funciona de verdade. O checkout (pagamento) ainda
+          está em desenvolvimento — ver docs/ARCHITECTURE.md, seção
+          &quot;O que falta para produção&quot;.
         </p>
       </div>
     </section>

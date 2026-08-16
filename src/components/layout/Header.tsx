@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { useCart } from "@/context/CartContext";
 
 const NAV_LINKS = [
   { href: "/artistas", label: "Artistas" },
@@ -12,12 +13,13 @@ const NAV_LINKS = [
 
 /**
  * Cabeçalho fixo do site. Client Component porque controla o estado
- * do menu mobile (useState). O carrinho/busca/conta são apenas UI
- * neste protótipo — sem lógica de e-commerce conectada ainda
+ * do menu mobile (useState) e lê o carrinho (useCart). Busca/conta
+ * ainda são apenas UI neste protótipo — sem lógica conectada
  * (ver docs/ARCHITECTURE.md, seção "O que falta para produção").
  */
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { totalItems } = useCart();
 
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-ink text-paper">
@@ -48,7 +50,9 @@ export default function Header() {
           <span aria-hidden className="hidden sm:inline">
             Busca
           </span>
-          <span aria-hidden>Carrinho (0)</span>
+          <Link href="/carrinho" className="hover:opacity-70">
+            Carrinho ({totalItems})
+          </Link>
         </div>
       </div>
 

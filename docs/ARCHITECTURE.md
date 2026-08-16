@@ -14,11 +14,19 @@ pedaços que realmente precisam de interatividade no navegador (o que
 continua funcionando normalmente em export estático, só roda como
 JavaScript no cliente em vez de servidor):
 
-- `src/components/layout/Header.tsx` — menu mobile (abre/fecha)
+- `src/components/layout/Header.tsx` — menu mobile (abre/fecha) e
+  contador do carrinho (`useCart`)
 - `src/components/layout/Newsletter.tsx` — form com `preventDefault()`
 - `src/components/loja/LojaContent.tsx` — lê o filtro `?categoria=` via
   `useSearchParams` (não dá pra ler isso no servidor num site estático,
   já que não há requisição por página — ver nota sobre `/loja` abaixo)
+- `src/context/CartContext.tsx` — estado do carrinho (`useState` +
+  `localStorage`)
+- `src/components/loja/AddToCartButton.tsx` — botão "Adicionar ao
+  carrinho" da página de produto (o resto da página continua Server
+  Component)
+- `src/components/carrinho/CarrinhoContent.tsx` — conteúdo da página
+  `/carrinho`
 
 Tudo o mais (páginas, cards, grids) é Server Component: renderiza no
 servidor, manda HTML pronto, carrega mais rápido e manda menos
@@ -35,6 +43,7 @@ porque você usou `useState`, `onClick`, etc.).
 | `/artistas/[slug]` | `src/app/artistas/[slug]/page.tsx` | Estática (pré-gerada via `generateStaticParams`) |
 | `/loja` | `src/app/loja/page.tsx` | Estática — filtro `?categoria=` é lido no navegador (ver `LojaContent.tsx`), não no servidor |
 | `/loja/produto/[slug]` | `src/app/loja/produto/[slug]/page.tsx` | Estática (pré-gerada) |
+| `/carrinho` | `src/app/carrinho/page.tsx` | Estática — lê o carrinho no navegador via `CartContext` |
 | `/sobre` | `src/app/sobre/page.tsx` | Estática |
 | `/contato` | `src/app/contato/page.tsx` | Estática |
 
@@ -66,12 +75,16 @@ src/content/products.ts ──┴──►  Server Components (páginas)  ──
                               src/components/ui/*
 ```
 
-Não existe estado global (Context, Redux, etc.) porque não existe nada
-que precise disso ainda — o carrinho, por exemplo, é só um contador fixo
-"(0)" no Header. Quando o carrinho for implementado de verdade, ele vai
-precisar de estado compartilhado entre Header e as páginas de produto;
-nesse momento vale considerar Context API (simples) ou uma lib como
-Zustand (se o estado crescer).
+O carrinho usa Context API (`src/context/CartContext.tsx`), compartilhado
+entre Header (contador), a página de produto (`AddToCartButton`) e
+`/carrinho`. Estado guardado como `{ productSlug, quantity }[]`, salvo em
+`localStorage` a cada mudança; os dados completos do produto (nome,
+preço, etc.) são sempre buscados de `src/content/products.ts` na hora de
+ler o carrinho, nunca duplicados no storage — assim, se um produto for
+removido do catálogo, ele some do carrinho de quem já tinha adicionado,
+em vez de quebrar. Se o estado global crescer bastante (ex: com conta de
+usuário/carrinho sincronizado no servidor), vale reavaliar para algo
+como Zustand.
 
 ## O que falta para produção
 
@@ -85,8 +98,10 @@ funcional. Antes de ir ao ar, falta:
 2. **Fotos reais**: trocar `<PlaceholderImage />` por `next/image` em
    todo lugar que ela aparece (ver comentário no topo de
    `src/components/ui/PlaceholderImage.tsx` e `docs/CONTENT_GUIDE.md`).
-3. **Carrinho e checkout**: o botão "Adicionar ao carrinho" em
-   `src/app/loja/produto/[slug]/page.tsx` não faz nada ainda.
+3. **Checkout**: o carrinho em si já funciona de verdade (adicionar,
+   remover, alterar quantidade, persistido em `localStorage` — ver
+   `src/context/CartContext.tsx`). Falta o checkout (pagamento): o botão
+   "Finalizar pedido" em `/carrinho` está desabilitado de propósito.
    **Importante**: como o site roda como export estático no GitHub
    Pages (sem servidor Node — ver `docs/DEPLOY.md`), não dá pra usar
    Server Actions/API Routes próprias para processar pagamento. As

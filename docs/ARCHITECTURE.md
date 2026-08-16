@@ -1,5 +1,23 @@
 # Arquitetura
 
+## Status do desenvolvimento (ler antes de continuar)
+
+Em andamento: implementar as funcionalidades que faltavam (ver "O que
+falta para produção" abaixo), mantendo os placeholders visuais/fotos
+como estão por enquanto (fotos reais ficam pra depois, é uma decisão
+separada do Diogo).
+
+- ✅ **Carrinho** — feito e publicado (adicionar/remover/alterar
+  quantidade, persistência em localStorage, contador no Header,
+  página `/carrinho`). Ver `src/context/CartContext.tsx`.
+- ⏭️ **Próximo (aguardando autorização do Diogo pra começar)**:
+  **Checkout** — página de resumo do pedido + formulário de entrega.
+  Ainda sem processador de pagamento real conectado (decisão em aberto,
+  ver item 3 abaixo).
+- ⬜ Depois: Busca, Newsletter + Contato (envio real), Conta de
+  usuário/login — nessa ordem, um de cada vez, sempre com autorização
+  antes de começar o próximo.
+
 ## Visão geral
 
 O site é publicado como **export estático** (`output: "export"` em

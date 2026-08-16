@@ -121,4 +121,6 @@ externo para processar o envio, já que não há backend próprio).
 
 ## Próximos passos
 
-Ver `docs/ARCHITECTURE.md`, seção "O que falta para produção".
+Ver `docs/ARCHITECTURE.md`, seção **"Status do desenvolvimento"** (topo
+do arquivo) — mostra o que já foi feito, o que está em andamento e o
+que vem depois.

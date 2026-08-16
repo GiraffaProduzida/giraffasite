@@ -32,7 +32,12 @@ export interface Artist {
 }
 
 export type ProductCategory =
-  | "Vinil"
+  /**
+   * Antes era só "Vinil". Passou a cobrir também instrumentos e
+   * equipamentos (ex: pedais, microfones, violões) — não é mais uma
+   * categoria só de disco. Nome escolhido pelo Diogo.
+   */
+  | "Garimpeiros Máfia"
   | "CD"
   | "Camiseta"
   | "Moletom"

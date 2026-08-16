@@ -2,7 +2,11 @@ import Link from "next/link";
 import PlaceholderImage from "@/components/ui/PlaceholderImage";
 
 const CATEGORIES = [
-  { href: "/loja?categoria=vinil", label: "Vinis", tone: "gold" as const },
+  {
+    href: `/loja?categoria=${encodeURIComponent("Garimpeiros Máfia")}`,
+    label: "Garimpeiros Máfia",
+    tone: "gold" as const,
+  },
   { href: "/artistas", label: "Artistas", tone: "red" as const },
   { href: "/loja", label: "Loja", tone: "blue" as const },
   { href: "/sobre", label: "A Girrafa", tone: "gold" as const },

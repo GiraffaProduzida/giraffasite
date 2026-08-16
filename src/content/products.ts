@@ -12,7 +12,7 @@ export const products: Product[] = [
   {
     slug: "luna-cerrado-vinil-cerrado-aberto",
     name: "Luna Cerrado — Cerrado Aberto (Vinil)",
-    category: "Vinil",
+    category: "Garimpeiros Máfia",
     priceInCents: 15900,
     description:
       "Primeira prensagem em vinil 180g do álbum de estreia de Luna Cerrado, com encarte de 8 páginas e letras ilustradas.",
@@ -64,12 +64,55 @@ export const products: Product[] = [
   {
     slug: "ferrovia-vinil-linha-tronco",
     name: "Ferrovia — Linha Tronco (Vinil Colorido)",
-    category: "Vinil",
+    category: "Garimpeiros Máfia",
     priceInCents: 17900,
     description: "Edição limitada em vinil colorido (300 unidades numeradas) do álbum Linha Tronco.",
     artistSlug: "ferrovia",
     inStock: false,
     accent: "gold",
+  },
+  // A partir daqui: exemplos de instrumentos/equipamentos, também dentro
+  // da categoria "Garimpeiros Máfia" — não têm artistSlug porque não são
+  // ligados a um artista específico, são achados/curadoria da loja.
+  {
+    slug: "pedal-overdrive-garimpeiro",
+    name: "Pedal de Overdrive Garimpeiro Mk1",
+    category: "Garimpeiros Máfia",
+    priceInCents: 45900,
+    description:
+      "Pedal de overdrive analógico, montado à mão, garimpado de uma pequena fábrica paulista. Circuito baseado em drives clássicos, com controle de graves independente.",
+    inStock: true,
+    accent: "red",
+  },
+  {
+    slug: "microfone-dinamico-estudio-garimpo",
+    name: "Microfone Dinâmico de Estúdio — Achado Garimpo",
+    category: "Garimpeiros Máfia",
+    priceInCents: 89900,
+    description:
+      "Unidade recondicionada de microfone dinâmico cardioide, testada e aprovada pela equipe técnica da Girrafa Produzida antes de ir pra loja.",
+    inStock: true,
+    accent: "blue",
+  },
+  {
+    slug: "violao-folk-garimpeiros-edition",
+    name: "Violão Folk — Garimpeiros Máfia Edition",
+    category: "Garimpeiros Máfia",
+    priceInCents: 189900,
+    description:
+      "Violão folk com tampo maciço, escolhido a dedo pelo time de garimpo. Cada unidade é única — vem com etiqueta numerada dentro da caixa acústica.",
+    inStock: true,
+    featured: true,
+    accent: "gold",
+  },
+  {
+    slug: "fone-estudio-monitor-garimpo",
+    name: "Fone de Estúdio Monitor — Achado Garimpo",
+    category: "Garimpeiros Máfia",
+    priceInCents: 69900,
+    description: "Fone fechado para monitoramento em estúdio, resposta de frequência plana, testado nas gravações da casa.",
+    inStock: false,
+    accent: "red",
   },
   {
     slug: "mc-vertigem-cd-vertigem-2",

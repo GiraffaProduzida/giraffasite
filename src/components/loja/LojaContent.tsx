@@ -7,7 +7,7 @@ import { products } from "@/content/products";
 import type { ProductCategory } from "@/lib/types";
 
 const CATEGORIES: ProductCategory[] = [
-  "Vinil",
+  "Garimpeiros Máfia",
   "CD",
   "Camiseta",
   "Moletom",

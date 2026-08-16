@@ -35,7 +35,7 @@ Mesma lógica, em `src/content/products.ts`, seguindo o tipo `Product`:
 {
   slug: "nome-do-produto",
   name: "Nome do Produto",
-  category: "Vinil",              // um dos valores em ProductCategory (src/lib/types.ts)
+  category: "Garimpeiros Máfia",  // um dos valores em ProductCategory (src/lib/types.ts)
   priceInCents: 15900,            // preço em CENTAVOS (R$ 159,00 = 15900) — evita erro de arredondamento
   description: "Descrição do produto usada na página de detalhe.",
   artistSlug: "nome-do-artista",  // opcional — só se o produto for de um artista específico
@@ -47,6 +47,15 @@ Mesma lógica, em `src/content/products.ts`, seguindo o tipo `Product`:
 
 `priceInCents` sempre em centavos — a formatação para "R$ 159,00" é
 feita automaticamente por `formatPriceBRL()` (`src/lib/format.ts`).
+
+### Sobre a categoria "Garimpeiros Máfia"
+
+Não é mais só a seção de vinil — o Diogo renomeou pra cobrir também
+instrumentos e equipamentos (pedais, microfones, violões etc.), então
+qualquer "achado" que a produtora queira vender entra aqui, disco ou
+não. Ao adicionar um produto nessa categoria, não é preciso `artistSlug`
+a menos que o item seja realmente ligado a um artista específico (como
+os vinis de lançamento).
 
 ## Fotos
 

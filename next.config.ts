@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 /**
  * Configuração para publicar como site estático no GitHub Pages
- * (repositório: https://github.com/GiraffaProduzida/giraffasite).
+ * (repositório: https://github.com/Libraleones/girafaproduzida).
  *
  * `output: "export"` faz o `next build` gerar HTML/CSS/JS puros na
  * pasta `out/`, sem precisar de servidor Node rodando — é isso que o
@@ -23,7 +23,7 @@ import type { NextConfig } from "next";
  * pra não atrapalhar o desenvolvimento do dia a dia.
  */
 const isGithubActionsBuild = process.env.GITHUB_ACTIONS === "true";
-const repoName = "giraffasite";
+const repoName = "girafaproduzida";
 
 const nextConfig: NextConfig = {
   output: "export",

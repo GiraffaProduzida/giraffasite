@@ -2,7 +2,7 @@
 
 O site é publicado como **export estático** (`output: "export"` em
 `next.config.ts`) no repositório
-[GiraffaProduzida/giraffasite](https://github.com/GiraffaProduzida/giraffasite),
+[Libraleones/girafaproduzida](https://github.com/Libraleones/girafaproduzida),
 via GitHub Pages.
 
 ## Como funciona
@@ -13,7 +13,7 @@ via GitHub Pages.
    pasta `out/` com HTML/CSS/JS puros) e publica essa pasta no GitHub
    Pages.
 3. O site fica disponível em
-   **https://giraffaproduzida.github.io/giraffasite/**.
+   **https://libraleones.github.io/girafaproduzida/**.
 
 Não é preciso rodar nenhum comando de deploy manualmente — só dar push
 na `main`. Também dá pra disparar manualmente: na aba **Actions** do
@@ -23,7 +23,7 @@ repositório no GitHub → workflow "Deploy para o GitHub Pages" → botão
 ## Configuração única (só precisa fazer 1 vez)
 
 No GitHub, em **Settings → Pages** do repositório
-`GiraffaProduzida/giraffasite`:
+`Libraleones/girafaproduzida`:
 
 - Em **Source**, selecione **GitHub Actions** (não "Deploy from a
   branch"). Sem isso o workflow não tem permissão de publicar.
@@ -38,8 +38,8 @@ Não quebra — mas os links internos (`/artistas`, `/_next/...` etc.)
 são gerados como caminho absoluto a partir da raiz. Localmente
 (`npm run dev` ou abrindo `out/index.html` direto) isso funciona numa
 raiz `/`. Já no GitHub Pages, um repositório de projeto como este fica
-publicado em `/giraffasite/`, não na raiz do domínio — por isso
-`next.config.ts` adiciona automaticamente o prefixo `/giraffasite` a
+publicado em `/girafaproduzida/`, não na raiz do domínio — por isso
+`next.config.ts` adiciona automaticamente o prefixo `/girafaproduzida` a
 todos os links e assets, **mas só quando o build roda dentro do GitHub
 Actions** (variável de ambiente `GITHUB_ACTIONS=true`, definida
 automaticamente pela plataforma). Rodando localmente, sem essa variável,
@@ -53,9 +53,9 @@ específico do GitHub Pages), rode:
 GITHUB_ACTIONS=true npm run build
 ```
 
-E sirva a pasta `out/` a partir de um subcaminho `/giraffasite/` (por
+E sirva a pasta `out/` a partir de um subcaminho `/girafaproduzida/` (por
 exemplo, copiando `out/` para dentro de uma pasta chamada
-`giraffasite/` e servindo o diretório pai) — do contrário os caminhos
+`girafaproduzida/` e servindo o diretório pai) — do contrário os caminhos
 com prefixo não vão bater com os arquivos servidos na raiz.
 
 ## O que NÃO funciona nesta configuração (export estático)

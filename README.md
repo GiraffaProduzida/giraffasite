@@ -3,9 +3,13 @@
 Protótipo funcional do site institucional e loja virtual da **Girrafa
 Produzida**, produtora musical.
 
-🔗 **Site publicado:** https://libraleones.github.io/girafaproduzida/
-(atualiza automaticamente a cada push na branch `main` — ver
-`docs/DEPLOY.md`)
+🔗 **Site publicado** (espelhado em dois repositórios, ver
+`docs/DEPLOY.md`):
+- https://libraleones.github.io/girafaproduzida/
+- https://giraffaproduzida.github.io/giraffasite/
+
+(cada um atualiza automaticamente a cada push na branch `main` do seu
+próprio repositório)
 
 > Este é um protótipo com dados de exemplo (placeholder), pensado para
 > ser a base que um time de desenvolvimento evolui até produção. Antes
@@ -108,12 +112,12 @@ uma prática comum em produção por trazer mais controle e privacidade
 
 O projeto está configurado para gerar um **export estático**
 (`output: "export"` em `next.config.ts`) e publicar em
-[GitHub Pages](https://pages.github.com/), no repositório
-`Libraleones/girafaproduzida`. Isso significa que não existe servidor
-Node em produção — só arquivos HTML/CSS/JS. Ver `docs/DEPLOY.md` para
-o fluxo completo e o que isso limita (ex: formulário de contato e
-newsletter precisam de um serviço externo para processar o envio, já
-que não há backend próprio).
+[GitHub Pages](https://pages.github.com/), espelhado nos repositórios
+`Libraleones/girafaproduzida` e `GiraffaProduzida/giraffasite`. Isso
+significa que não existe servidor Node em produção — só arquivos
+HTML/CSS/JS. Ver `docs/DEPLOY.md` para o fluxo completo e o que isso
+limita (ex: formulário de contato e newsletter precisam de um serviço
+externo para processar o envio, já que não há backend próprio).
 
 ## Próximos passos
 

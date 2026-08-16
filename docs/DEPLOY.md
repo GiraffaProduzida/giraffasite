@@ -1,29 +1,42 @@
 # Deploy no GitHub Pages
 
 O site é publicado como **export estático** (`output: "export"` em
-`next.config.ts`) no repositório
-[Libraleones/girafaproduzida](https://github.com/Libraleones/girafaproduzida),
-via GitHub Pages.
+`next.config.ts`) via GitHub Pages, e este código é **espelhado em dois
+repositórios** (dois remotes git, mesmo histórico):
+
+- [Libraleones/girafaproduzida](https://github.com/Libraleones/girafaproduzida)
+  → publica em https://libraleones.github.io/girafaproduzida/
+- [GiraffaProduzida/giraffasite](https://github.com/GiraffaProduzida/giraffasite)
+  → publica em https://giraffaproduzida.github.io/giraffasite/
+
+`next.config.ts` detecta o nome do repositório automaticamente em
+tempo de build (via `GITHUB_REPOSITORY`), então o mesmo código funciona
+sem alteração nos dois — ver comentário no topo do arquivo.
 
 ## Como funciona
 
 1. Todo push na branch `main` dispara o workflow
-   `.github/workflows/deploy.yml` (GitHub Actions).
+   `.github/workflows/deploy.yml` (GitHub Actions) **no repositório em
+   que o push foi feito**.
 2. O workflow instala as dependências, roda `npm run build` (que gera a
    pasta `out/` com HTML/CSS/JS puros) e publica essa pasta no GitHub
    Pages.
-3. O site fica disponível em
-   **https://libraleones.github.io/girafaproduzida/**.
+3. O site fica disponível na URL correspondente àquele repositório (ver
+   lista acima).
 
-Não é preciso rodar nenhum comando de deploy manualmente — só dar push
-na `main`. Também dá pra disparar manualmente: na aba **Actions** do
-repositório no GitHub → workflow "Deploy para o GitHub Pages" → botão
-**Run workflow**.
+Como são dois remotes independentes, um push em `git push origin main`
+só atualiza o repositório configurado como `origin`. Para manter os
+dois em dia, é preciso dar push nos dois remotes (ver
+`git remote -v` para ver os nomes configurados localmente).
 
-## Configuração única (só precisa fazer 1 vez)
+Não é preciso rodar nenhum comando de deploy manualmente além do push —
+o workflow cuida do resto. Também dá pra disparar manualmente: na aba
+**Actions** de cada repositório no GitHub → workflow "Deploy para o
+GitHub Pages" → botão **Run workflow**.
 
-No GitHub, em **Settings → Pages** do repositório
-`Libraleones/girafaproduzida`:
+## Configuração única (só precisa fazer 1 vez, em CADA repositório)
+
+No GitHub, em **Settings → Pages** de cada um dos dois repositórios:
 
 - Em **Source**, selecione **GitHub Actions** (não "Deploy from a
   branch"). Sem isso o workflow não tem permissão de publicar.
@@ -38,25 +51,28 @@ Não quebra — mas os links internos (`/artistas`, `/_next/...` etc.)
 são gerados como caminho absoluto a partir da raiz. Localmente
 (`npm run dev` ou abrindo `out/index.html` direto) isso funciona numa
 raiz `/`. Já no GitHub Pages, um repositório de projeto como este fica
-publicado em `/girafaproduzida/`, não na raiz do domínio — por isso
-`next.config.ts` adiciona automaticamente o prefixo `/girafaproduzida` a
+publicado em `/<nome-do-repo>/`, não na raiz do domínio — por isso
+`next.config.ts` adiciona automaticamente o prefixo `/<nome-do-repo>` a
 todos os links e assets, **mas só quando o build roda dentro do GitHub
 Actions** (variável de ambiente `GITHUB_ACTIONS=true`, definida
-automaticamente pela plataforma). Rodando localmente, sem essa variável,
-tudo continua na raiz — é assim de propósito, pra não atrapalhar
-`npm run dev`.
+automaticamente pela plataforma, junto com `GITHUB_REPOSITORY` no
+formato "dono/repo", de onde o nome é extraído — por isso funciona
+igual nos dois repositórios espelhados, sem precisar trocar nada no
+código). Rodando localmente, sem essas variáveis, tudo continua na
+raiz — é assim de propósito, pra não atrapalhar `npm run dev`.
 
 Se precisar simular o build de produção localmente (pra debugar algo
-específico do GitHub Pages), rode:
+específico do GitHub Pages), rode (troque `girafaproduzida` pelo nome
+do repositório que quiser simular):
 
 ```bash
-GITHUB_ACTIONS=true npm run build
+GITHUB_ACTIONS=true GITHUB_REPOSITORY=dono/girafaproduzida npm run build
 ```
 
-E sirva a pasta `out/` a partir de um subcaminho `/girafaproduzida/` (por
-exemplo, copiando `out/` para dentro de uma pasta chamada
-`girafaproduzida/` e servindo o diretório pai) — do contrário os caminhos
-com prefixo não vão bater com os arquivos servidos na raiz.
+E sirva a pasta `out/` a partir de um subcaminho `/girafaproduzida/`
+(por exemplo, copiando `out/` para dentro de uma pasta chamada
+`girafaproduzida/` e servindo o diretório pai) — do contrário os
+caminhos com prefixo não vão bater com os arquivos servidos na raiz.
 
 ## O que NÃO funciona nesta configuração (export estático)
 

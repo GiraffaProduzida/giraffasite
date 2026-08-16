@@ -1,8 +1,11 @@
 import type { NextConfig } from "next";
 
 /**
- * Configuração para publicar como site estático no GitHub Pages
- * (repositório: https://github.com/Libraleones/girafaproduzida).
+ * Configuração para publicar como site estático no GitHub Pages.
+ *
+ * Este repositório é espelhado em dois lugares (mesmo código, dois
+ * remotes git): https://github.com/Libraleones/girafaproduzida e
+ * https://github.com/GiraffaProduzida/giraffasite — ver docs/DEPLOY.md.
  *
  * `output: "export"` faz o `next build` gerar HTML/CSS/JS puros na
  * pasta `out/`, sem precisar de servidor Node rodando — é isso que o
@@ -16,14 +19,17 @@ import type { NextConfig } from "next";
  * "usuario.github.io") publica o site em
  * https://<org>.github.io/<nome-do-repo>/ — ou seja, o site NÃO fica na
  * raiz do domínio. Por isso precisamos de `basePath`/`assetPrefix` com
- * o nome do repositório. Isso só é aplicado quando o build roda dentro
- * do GitHub Actions (variável de ambiente `GITHUB_ACTIONS`, definida
- * automaticamente pela própria plataforma) — em `npm run dev`/`npm run
- * build` local, o site continua servido a partir da raiz, sem prefixo,
- * pra não atrapalhar o desenvolvimento do dia a dia.
+ * o nome do repositório. Como o mesmo código é publicado em dois
+ * repositórios com nomes diferentes, o nome não pode ser fixo no
+ * código — pegamos do `GITHUB_REPOSITORY` (formato "dono/repo"),
+ * variável definida automaticamente pelo GitHub Actions em qualquer
+ * repositório onde o workflow rodar. Em `npm run dev`/`npm run build`
+ * local essa variável não existe, então o site continua servido a
+ * partir da raiz, sem prefixo, pra não atrapalhar o desenvolvimento do
+ * dia a dia.
  */
 const isGithubActionsBuild = process.env.GITHUB_ACTIONS === "true";
-const repoName = "girafaproduzida";
+const repoName = process.env.GITHUB_REPOSITORY?.split("/")[1] ?? "girafaproduzida";
 
 const nextConfig: NextConfig = {
   output: "export",
